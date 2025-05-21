@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Page</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding-top: 50px;
+    }
+    .big-text {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .small-text {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .logo {
+      width: 100px;
+      height: 60px;
+      margin-bottom: 20px;
+    }
+    .download-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .counter {
+      margin-top: 10px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="big-text">DOWNLOAD PLUS ONE  </div>
+  <div class="small-text">Get the latest version here</div>
+
+  <!-- Logo -->
+  <img src="https://i.postimg.cc/LXTzVDkc/Polish-20250505-124953516.png" alt="Logo" class="logo">
+
+  <!-- Download Button -->
+  <br>
+  <a id="downloadBtn" class="download-btn" href="https://apk.e-droid.net/apk/app3574282-5jvghm.apk?v=1" target="_blank">Download</a>
+
+  <!-- Click Counter -->
+  <div class="counter">Clicked <span id="clickCount">0</span> times</div>
+
+  <script>
+    // Load previous count if saved
+    let count = localStorage.getItem("downloadClickCount") || 0;
+    document.getElementById("clickCount").innerText = count;
+
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      count++;
+      localStorage.setItem("downloadClickCount", count);
+      document.getElementById("clickCount").innerText = count;
+    });
+  </script>
+
+</body>
+</html>
