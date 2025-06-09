@@ -1,68 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Download Page</title>
+  <title>Plus One Mobile App</title>
   <style>
-    body {
-      text-align: center;
-      font-family: Arial, sans-serif;
-      padding-top: 50px;
-    }
-    .big-text {
-      font-size: 32px;
-      font-weight: bold;
-    }
-    .small-text {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    .logo {
-      width: 100px;
-      height: 60px;
-      margin-bottom: 20px;
-    }
-    .download-btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #28a745;
+    body { text-align: center; font-family: Arial, sans-serif; padding: 40px; }
+    h1 { font-size: 32px; }
+    .logo { width: 150px; height: auto; margin: 20px auto; }
+    .count { font-size: 20px; margin: 10px; }
+    .download-button {
+      background-color: #002D9C;
       color: white;
-      border: none;
+      padding: 12px 24px;
+      text-decoration: none;
+      font-size: 18px;
       border-radius: 6px;
-      cursor: pointer;
-    }
-    .counter {
-      margin-top: 10px;
-      font-size: 14px;
-      color: gray;
+      display: inline-block;
+      margin-top: 20px;
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
-  <div class="big-text">DOWNLOAD PLUS ONE  </div>
-  <div class="small-text">Get the latest version here</div>
+  <h1>PLUS ONE MOBILE APP</h1>
 
-  <!-- Logo -->
-  <img src="https://i.postimg.cc/LXTzVDkc/Polish-20250505-124953516.png" alt="Logo" class="logo">
+  <img src="https://i.postimg.cc/P5pWqVK9/20250429-193443.png" class="logo" alt="App Logo">
 
-  <!-- Download Button -->
-  <br>
-  <a id="downloadBtn" class="download-btn" href="https://apk.e-droid.net/apk/app3574282-5jvghm.apk?v=1" target="_blank">Download</a>
+  <div class="count" id="downloadCount">Total Downloaded: ...</div>
 
-  <!-- Click Counter -->
-  <div class="counter">Clicked <span id="clickCount">0</span> times</div>
+  <a class="download-button" href="#" onclick="handleDownload()">Download</a>
 
   <script>
-    // Load previous count if saved
-    let count = localStorage.getItem("downloadClickCount") || 0;
-    document.getElementById("clickCount").innerText = count;
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCk8xsKD9cfre55wznpNbOXyhH4crdgt_I",
+      authDomain: "p-cash-91e4c.firebaseapp.com",
+      databaseURL: "https://p-cash-91e4c-default-rtdb.firebaseio.com",
+      projectId: "p-cash-91e4c",
+      storageBucket: "p-cash-91e4c.firebasestorage.app",
+      messagingSenderId: "911151223688",
+      appId: "1:911151223688:web:eb0885c71902e5ae51e03d",
+      measurementId: "G-5B3FLQPF9Y"
+    };
 
-    document.getElementById("downloadBtn").addEventListener("click", function () {
-      count++;
-      localStorage.setItem("downloadClickCount", count);
-      document.getElementById("clickCount").innerText = count;
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const dbRef = firebase.database().ref("downloadCount");
+
+    // Update the count on page load
+    dbRef.on("value", (snapshot) => {
+      const count = snapshot.val() || 0;
+      document.getElementById("downloadCount").innerText = "Total Downloaded: " + count;
     });
+
+    // Handle download
+    function handleDownload() {
+      dbRef.transaction((current) => {
+        return (current || 0) + 1;
+      }).then(() => {
+        // After counting, redirect to APK link
+        window.location.href = "https://apk.e-droid.net/apk/app3574282-5jvghm.apk?v=2";
+      });
+    }
   </script>
 
 </body>
